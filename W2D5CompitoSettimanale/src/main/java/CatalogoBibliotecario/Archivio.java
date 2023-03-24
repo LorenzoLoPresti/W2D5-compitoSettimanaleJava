@@ -4,6 +4,7 @@ package CatalogoBibliotecario;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Archivio {
@@ -20,6 +21,7 @@ public class Archivio {
 		Libro libro5 = new Libro("ID5011446", "Artemis Fowl", LocalDate.of(2013, 12, 18), 302, "Eoin Colfer", Genere.SCI_FI);
 		Libro libro6 = new Libro("ID2292007", "I Never Promised You a Rose Garden", LocalDate.of(2020, 01, 04), 432, "Joanne Greenberg", Genere.HORROR);
 		Libro libro7 = new Libro("ID2629038", "L'orrore di Dunwitch", LocalDate.of(1929, 04, 11), 432, "H.P. Lovecraft", Genere.HORROR);
+		Libro libro8 = new Libro("ID2629038", "Dunwitch", LocalDate.of(1929, 04, 11), 432, "H.P. Lovecraft", Genere.HORROR);
 			
 		// Riviste
 		Rivista rivista1 = new Rivista("ID2625473", "Storic Mag", LocalDate.of(2020, 07, 12), 140, Periodicità.MENSILE);
@@ -30,11 +32,19 @@ public class Archivio {
 		SupportoCartaceo[] arr = {libro1, libro2, libro3, libro4, libro5, libro6, libro7, rivista1, rivista2, rivista3, rivista4};
 		
 		riempiArchivio(arr);
-		catalogo.get(10).getElemento();
-
 		
-		aggiungiElemento();
+		aggiungiElemento(libro1);
+		
+	
+		
+		rimuoviElemento("ID3080277");
 
+		System.out.println(catalogo.size());
+		
+		ricercaPerAnno(2023);
+		
+		ricercaPerAutore("Eoin Colfer");
+		
 
 	}
 	
@@ -70,18 +80,79 @@ public class Archivio {
 	public static void riempiArchivio(SupportoCartaceo[] arr) {
 		for(int i = 0; i < arr.length ;i++) {
 			catalogo.add(arr[i]);
+			System.out.print(i + ": ");
+			catalogo.get(i).getElemento();
 		}
 	}
-//	
+	
 	// AGGIUNGE UN ELEMENTO
 	public static void aggiungiElemento(SupportoCartaceo elem) {
-//		catalogo.stream().map(e -> e.titolo);
+
 		Stream.Builder<SupportoCartaceo> builder = Stream.builder();
 		Stream<SupportoCartaceo> arrStream = catalogo.stream();
 		arrStream.forEach(e -> {
 			builder.add(e);
-			e.getElemento();
 		});
+		builder.add(elem);
+		catalogo = builder.build().collect(Collectors.toList());
+		System.out.println("Nuovo elemento aggiunto: ");
+		catalogo.get(catalogo.size()-1).getElemento();
+		System.out.println();
+	}
+	
+	// RIMUOVE UN ELEMENTO PER ISBN
+	public static void rimuoviElemento(String id) {
+		Stream.Builder<SupportoCartaceo> builder = Stream.builder();
+		Stream<SupportoCartaceo> arrStream = catalogo.stream();
+		
+		arrStream.filter(e -> !e.CodiceISBN.equals(id))
+		.forEach(e -> builder.add(e));;
+		
+		catalogo = builder.build().collect(Collectors.toList());
+		
+		// PER VERIFICARE GLI ELEMENTI
+//		System.out.println("Esercizio 2: Rimuove per ISBN");
+//		for(int i = 0; i < catalogo.size(); i++) {
+//			System.out.print(i + ": ");
+//			catalogo.get(i).getElemento();
+//		}
+		
+		// TENTATIVO CON ALTRO METODO
+//		Stream<SupportoCartaceo>  nuovoArr = catalogo.stream()
+//		.filter(e -> !e.CodiceISBN.equals(id))
+//		.forEach(e -> e.getElemento());
+//		
+	}
+	
+	// RICERCA PER ANNO DI PUBBLICAZIONE
+	public static void ricercaPerAnno(int anno) {
+		Stream<SupportoCartaceo> arrStream = catalogo.stream();
+		
+		System.out.println("ESERCIZIO 3");
+		arrStream
+		.filter(e -> e.annoPubblicazione.getYear() == anno)
+		.forEach(e -> e.getElemento());
+		;
+		
+//		catalogo = builder.build().collect(Collectors.toList());
+		
+		// PER VERIFICARE GLI ELEMENTI
+//		System.out.println("Esercizio 3: Cerca per anno");
+//		for(int i = 0; i < catalogo.size(); i++) {
+//			System.out.print(i + ": ");
+//			catalogo.get(i).getElemento();
+//		}
+	}
+	
+	public static void ricercaPerAutore(String author) {
+		Stream<SupportoCartaceo> arrStream = catalogo.stream();
+		
+		System.out.println("ESERCIZIO 4");
+		arrStream
+		.filter(e -> e instanceof Libro && ((Libro) e).autore.equals(author))
+		.forEach(e -> e.getElemento());
+		
+//		catalogo = builder.build().collect(null)
 	}
 
 }
