@@ -43,7 +43,7 @@ public class Archivio {
 		
 		ricercaPerAnno(2023);
 		
-		ricercaPerAutore("Eoin Colfer");
+		ricercaPerAutore("");
 		
 
 	}
@@ -127,32 +127,43 @@ public class Archivio {
 	// RICERCA PER ANNO DI PUBBLICAZIONE
 	public static void ricercaPerAnno(int anno) {
 		Stream<SupportoCartaceo> arrStream = catalogo.stream();
+		Stream.Builder<SupportoCartaceo> builder = Stream.builder();
 		
 		System.out.println("ESERCIZIO 3");
 		arrStream
 		.filter(e -> e.annoPubblicazione.getYear() == anno)
-		.forEach(e -> e.getElemento());
-		;
+		.forEach(e -> {
+			e.getElemento();
+			builder.add(e);
+		});
 		
-//		catalogo = builder.build().collect(Collectors.toList());
-		
-		// PER VERIFICARE GLI ELEMENTI
-//		System.out.println("Esercizio 3: Cerca per anno");
-//		for(int i = 0; i < catalogo.size(); i++) {
-//			System.out.print(i + ": ");
-//			catalogo.get(i).getElemento();
-//		}
+		List<SupportoCartaceo> arr = builder.build().collect(Collectors.toList());
+		if(arr.size() == 0) {
+			System.out.println("Non ci sono libri o riviste che corrispondono al criterio di ricerca ");
+			System.out.println();
+		}
+
 	}
 	
 	public static void ricercaPerAutore(String author) {
 		Stream<SupportoCartaceo> arrStream = catalogo.stream();
+		Stream.Builder<SupportoCartaceo> builder = Stream.builder();
 		
 		System.out.println("ESERCIZIO 4");
 		arrStream
 		.filter(e -> e instanceof Libro && ((Libro) e).autore.equals(author))
-		.forEach(e -> e.getElemento());
+		.forEach(e -> {
+			e.getElemento();
+			builder.add(e);
+		});
 		
-//		catalogo = builder.build().collect(null)
+		// MESSAGGIO DI ERRORE NEL CASO IN CUI NON CI SIANO LIBRI CON L?AUTORE INSERITO
+		List<SupportoCartaceo> arr = builder.build().collect(Collectors.toList());
+		if(arr.size() == 0) {
+			System.out.println("Non ci sono libri che corrispondono al criterio di ricerca");
+			System.out.println();
+		}
+		
 	}
 
 }
