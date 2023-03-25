@@ -1,37 +1,58 @@
 package CatalogoBibliotecario;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.io.FileUtils;
+
 public class Archivio {
 
 	public static List<SupportoCartaceo> catalogo = new ArrayList<SupportoCartaceo>();
+	private static String nomeFile = "src/main/resources/catalogo.txt";
 	
 	public static void main(String[] args) {
 		
+//		 try {
+//	            BufferedWriter writer = new BufferedWriter(new FileWriter("../archivio.txt"));
+//	            writer.write("Questo è il mio primo file di testo!");
+//	            writer.close();
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+		
+		
+		
 		// LIbri
-		Libro libro1 = new Libro("ID3080277", "L'arte della Guerra", LocalDate.of(2012, 3, 14), 90, "Sun Tsu", Genere.SAGGISTICA);
-		Libro libro2 = new Libro("ID8660409", "Harry Potter e il prigioniero di Azkaban", LocalDate.of(2013, 12, 18), 330, "JK Rowling", Genere.SAGGISTICA);
-		Libro libro3 = new Libro("ID8660409", "Lord of Light", LocalDate.of(2000, 5, 5),200, "Roger Zelazny", Genere.FANTASY);
-		Libro libro4 = new Libro("ID8660409", "Wool", LocalDate.of(2009, 11, 28), 709, "Hugh Howley", Genere.STORICO);
-		Libro libro5 = new Libro("ID5011446", "Artemis Fowl", LocalDate.of(2013, 12, 18), 302, "Eoin Colfer", Genere.SCI_FI);
-		Libro libro6 = new Libro("ID2292007", "I Never Promised You a Rose Garden", LocalDate.of(2020, 01, 04), 432, "Joanne Greenberg", Genere.HORROR);
-		Libro libro7 = new Libro("ID2629038", "L'orrore di Dunwitch", LocalDate.of(1929, 04, 11), 432, "H.P. Lovecraft", Genere.HORROR);
-		Libro libro8 = new Libro("ID2629038", "Dunwitch", LocalDate.of(1929, 04, 11), 432, "H.P. Lovecraft", Genere.HORROR);
+		Libro libro1 = new Libro("ID3080277", "L'arte della Guerra", 2012, 90, "Sun Tsu", Genere.SAGGISTICA);
+		Libro libro2 = new Libro("ID8660409", "Harry Potter e il prigioniero di Azkaban", 2013, 330, "JK Rowling", Genere.SAGGISTICA);
+		Libro libro3 = new Libro("ID8660409", "Lord of Light", 2000, 200, "Roger Zelazny", Genere.FANTASY);
+		Libro libro4 = new Libro("ID8660409", "Wool", 2009, 709, "Hugh Howley", Genere.STORICO);
+		Libro libro5 = new Libro("ID5011446", "Artemis Fowl", 2013, 302, "Eoin Colfer", Genere.SCI_FI);
+		Libro libro6 = new Libro("ID2292007", "I Never Promised You a Rose Garden", 2020, 432, "Joanne Greenberg", Genere.HORROR);
+		Libro libro7 = new Libro("ID2629038", "L'orrore di Dunwitch", 1929, 432, "H.P. Lovecraft", Genere.HORROR);
+		Libro libro8 = new Libro("ID2629038", "Dunwitch", 1929, 432, "H.P. Lovecraft", Genere.HORROR);
 			
 		// Riviste
-		Rivista rivista1 = new Rivista("ID2625473", "Storic Mag", LocalDate.of(2020, 07, 12), 140, Periodicità.MENSILE);
-		Rivista rivista2 = new Rivista("ID2416365", "Car Mag", LocalDate.of(2023, 11, 28), 130, Periodicità.MENSILE);
-		Rivista rivista3 = new Rivista("ID2416365", "Topolino", LocalDate.of(2023, 10, 8), 150, Periodicità.SETTIMANALE);
-		Rivista rivista4 = new Rivista("ID2416365", "ArtiMarziali for the win", LocalDate.of(2021, 3, 14), 190, Periodicità.TRIMESTRALE);
+		Rivista rivista1 = new Rivista("ID2625473", "Storic Mag", 2020, 140, Periodicità.MENSILE);
+		Rivista rivista2 = new Rivista("ID2416365", "Car Mag", 2023,  130, Periodicità.MENSILE);
+		Rivista rivista3 = new Rivista("ID2416365", "Topolino", 2023, 150, Periodicità.SETTIMANALE);
+		Rivista rivista4 = new Rivista("ID2416365", "ArtiMarziali for the win", 2021, 190, Periodicità.TRIMESTRALE);
 		
 		SupportoCartaceo[] arr = {libro1, libro2, libro3, libro4, libro5, libro6, libro7, rivista1, rivista2, rivista3, rivista4};
 		
-		riempiArchivio(arr);
+		
+//		riempiArchivio(arr);
+		
+		salvaCatalogo();
+		caricaCatalogo();
 		
 		aggiungiElemento(libro1);
 		
@@ -45,6 +66,8 @@ public class Archivio {
 		
 		ricercaPerAutore("");
 		
+		
+	
 
 	}
 	
@@ -131,7 +154,7 @@ public class Archivio {
 		
 		System.out.println("ESERCIZIO 3");
 		arrStream
-		.filter(e -> e.annoPubblicazione.getYear() == anno)
+		.filter(e -> e.annoPubblicazione == anno)
 		.forEach(e -> {
 			e.getElemento();
 			builder.add(e);
@@ -165,5 +188,97 @@ public class Archivio {
 		}
 		
 	}
+	
+	public static String spaceMaker() {
+		return "#";
+	}
+	
+	// METODO PER SALVARE IL CATALOGO
+	public static void salvaCatalogo() {
+		
+		File file = new File(nomeFile);
+		StringBuilder builder = new StringBuilder();
+		
+		for(SupportoCartaceo e : catalogo) {
+			if(e instanceof Libro) {
+				Libro libro = (Libro) e;
+				builder.append("Libro#");
+				builder.append(libro.CodiceISBN);
+				builder.append(spaceMaker());
+				builder.append(libro.titolo);
+				builder.append(spaceMaker());
+				builder.append(libro.annoPubblicazione);
+				builder.append(spaceMaker());
+				builder.append(libro.numeroPagine);
+				builder.append(spaceMaker());
+				builder.append(libro.autore);
+				builder.append(spaceMaker());
+				builder.append(libro.genere);
+				builder.append("\n");
+			} else if(e instanceof Rivista) {
+				Rivista rivista = (Rivista) e;
+				builder.append("Rivista#");
+				builder.append(rivista.CodiceISBN);
+				builder.append(spaceMaker());
+				builder.append(rivista.titolo);
+				builder.append(spaceMaker());
+				builder.append(rivista.annoPubblicazione);
+				builder.append(spaceMaker());
+				builder.append(rivista.numeroPagine);
+				builder.append(spaceMaker());
+				builder.append(rivista.periodicità);
+				builder.append("\n");
+//				Rivista rivista1 = new Rivista("ID2625473", "Storic Mag", LocalDate.of(2020, 07, 12), 140, Periodicità.MENSILE);
+			}
+			
+			try {
+				FileUtils.writeStringToFile(file, builder.toString(), "UTF-8");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	// METODO PER CARICARE IL FILE TXT
+	public static void caricaCatalogo() {
+		
+		File file = new File(nomeFile);
+		try {
+			List<String> numeroRighe = FileUtils.readLines(file, "UTF-8");
+			System.out.println("\n" + numeroRighe.size());
+			for(String e : numeroRighe) {
+				String[] spazio = e.split(spaceMaker());
+				if(spazio[0].equals("Libro")) {
+					String id = spazio[1];
+					String titolo = spazio[2];
+					int data = Integer.parseInt(spazio[3]);
+					int pagine = Integer.parseInt(spazio[4]);
+					String autore = spazio[5];
+					Genere genere = Genere.valueOf(spazio[6]);
+					
+					Libro libro = new Libro(id, titolo, data, pagine, autore, genere);
+					catalogo.add(libro);
+//					Libro libro1 = new Libro("ID3080277", "L'arte della Guerra", 2012, 90, "Sun Tsu", Genere.SAGGISTICA);
+				} else if(spazio[0].equals("Rivista")) {
+					String id = spazio[1];
+					String titolo = spazio[2];
+					int data = Integer.parseInt(spazio[3]);
+					int pagine = Integer.parseInt(spazio[4]);
+					Periodicità per = Periodicità.valueOf(spazio[5]);
+					
+					Rivista rivista = new Rivista(id, titolo, data, pagine, per);
+					catalogo.add(rivista);
+					
+//					Rivista rivista1 = new Rivista("ID2625473", "Storic Mag", LocalDate.of(2020, 07, 12), 140, Periodicità.MENSILE);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	 
 
 }

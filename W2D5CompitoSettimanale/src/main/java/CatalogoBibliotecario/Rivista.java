@@ -6,7 +6,7 @@ public class Rivista extends SupportoCartaceo {
 
 	Periodicità periodicità;
 	
-	public Rivista(String id, String title, LocalDate scrittoIl, int pag, Periodicità period) {
+	public Rivista(String id, String title, int scrittoIl, int pag, Periodicità period) {
 		super(id, title, scrittoIl, pag);
 		this.periodicità = period;
 	}

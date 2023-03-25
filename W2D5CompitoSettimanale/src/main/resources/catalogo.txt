@@ -1,0 +1,11 @@
+Libro#ID3080277#L'arte della Guerra#2012#90#Sun Tsu#SAGGISTICA
+Libro#ID8660409#Harry Potter e il prigioniero di Azkaban#2013#330#JK Rowling#SAGGISTICA
+Libro#ID8660409#Lord of Light#2000#200#Roger Zelazny#FANTASY
+Libro#ID8660409#Wool#2009#709#Hugh Howley#STORICO
+Libro#ID5011446#Artemis Fowl#2013#302#Eoin Colfer#SCI_FI
+Libro#ID2292007#I Never Promised You a Rose Garden#2020#432#Joanne Greenberg#HORROR
+Libro#ID2629038#L'orrore di Dunwitch#1929#432#H.P. Lovecraft#HORROR
+Rivista#ID2625473#Storic Mag#2020#140#MENSILE
+Rivista#ID2416365#Car Mag#2023#130#MENSILE
+Rivista#ID2416365#Topolino#2023#150#SETTIMANALE
+Rivista#ID2416365#ArtiMarziali for the win#2021#190#TRIMESTRALE

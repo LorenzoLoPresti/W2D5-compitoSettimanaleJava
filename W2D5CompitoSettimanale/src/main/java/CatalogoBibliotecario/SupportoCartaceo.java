@@ -5,10 +5,10 @@ import java.time.LocalDate;
 public class SupportoCartaceo {
 	public String CodiceISBN;
 	public String titolo;
-	public LocalDate annoPubblicazione;
+	public int annoPubblicazione;
 	public int numeroPagine;
 	
-	public SupportoCartaceo(String id, String title, LocalDate scrittoIl, int pag) {
+	public SupportoCartaceo(String id, String title, int scrittoIl, int pag) {
 		this.CodiceISBN = id;
 		this.titolo = title;
 		this.annoPubblicazione = scrittoIl;
