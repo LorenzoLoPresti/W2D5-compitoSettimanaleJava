@@ -1,9 +1,7 @@
 package CatalogoBibliotecario;
 
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,13 +18,6 @@ public class Archivio {
 	
 	public static void main(String[] args) {
 		
-//		 try {
-//	            BufferedWriter writer = new BufferedWriter(new FileWriter("../archivio.txt"));
-//	            writer.write("Questo è il mio primo file di testo!");
-//	            writer.close();
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }
 		
 		
 		
@@ -54,7 +45,8 @@ public class Archivio {
 		salvaCatalogo();
 		caricaCatalogo();
 		
-		aggiungiElemento(libro1);
+	aggiungiElemento(libro1);
+	salvaCatalogo();
 		
 	
 		
@@ -106,6 +98,7 @@ public class Archivio {
 			System.out.print(i + ": ");
 			catalogo.get(i).getElemento();
 		}
+		salvaCatalogo();
 	}
 	
 	// AGGIUNGE UN ELEMENTO
@@ -121,6 +114,7 @@ public class Archivio {
 		System.out.println("Nuovo elemento aggiunto: ");
 		catalogo.get(catalogo.size()-1).getElemento();
 		System.out.println();
+		salvaCatalogo();
 	}
 	
 	// RIMUOVE UN ELEMENTO PER ISBN
@@ -132,6 +126,7 @@ public class Archivio {
 		.forEach(e -> builder.add(e));;
 		
 		catalogo = builder.build().collect(Collectors.toList());
+		salvaCatalogo();
 		
 		// PER VERIFICARE GLI ELEMENTI
 //		System.out.println("Esercizio 2: Rimuove per ISBN");
