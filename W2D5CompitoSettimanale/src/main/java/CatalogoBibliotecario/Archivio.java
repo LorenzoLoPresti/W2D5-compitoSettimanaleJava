@@ -16,12 +16,9 @@ public class Archivio {
 	public static List<SupportoCartaceo> catalogo = new ArrayList<SupportoCartaceo>();
 	private static String nomeFile = "src/main/resources/catalogo.txt";
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
 		
-		
-		
-		
-		// LIbri
+//		 LIbri
 		Libro libro1 = new Libro("ID3080277", "L'arte della Guerra", 2012, 90, "Sun Tsu", Genere.SAGGISTICA);
 		Libro libro2 = new Libro("ID8660409", "Harry Potter e il prigioniero di Azkaban", 2013, 330, "JK Rowling", Genere.SAGGISTICA);
 		Libro libro3 = new Libro("ID8660409", "Lord of Light", 2000, 200, "Roger Zelazny", Genere.FANTASY);
@@ -36,27 +33,42 @@ public class Archivio {
 		Rivista rivista2 = new Rivista("ID2416365", "Car Mag", 2023,  130, Periodicità.MENSILE);
 		Rivista rivista3 = new Rivista("ID2416365", "Topolino", 2023, 150, Periodicità.SETTIMANALE);
 		Rivista rivista4 = new Rivista("ID2416365", "ArtiMarziali for the win", 2021, 190, Periodicità.TRIMESTRALE);
+//		
+//
+		// Perdonami non ho il tempo di implementare l'inserimento dei dati tramite scanner 😥
 		
-		SupportoCartaceo[] arr = {libro1, libro2, libro3, libro4, libro5, libro6, libro7, rivista1, rivista2, rivista3, rivista4};
 		
-		
+//		PER RIEMPIRE UN CATALOGO VUOTO
+//		SupportoCartaceo[] arr = {libro1, libro2, libro3, libro4, libro5, libro6, libro7, rivista1, rivista2, rivista3, rivista4};
+//		
 //		riempiArchivio(arr);
 		
-		salvaCatalogo();
+//		
+		// SALVATAGGIO E CARICAMENTO (IL SALVATAGGIO AVVIENE ANCHE NEI METODI AGGIUNGI E RIMUOVI)
+//		salvaCatalogo();
 		caricaCatalogo();
 		
-	aggiungiElemento(libro1);
-	salvaCatalogo();
 		
-	
+		//AGGIUNGI ELEMENTO E SALVATAGGIO
+//		aggiungiElemento(libro1);
 		
-		rimuoviElemento("ID3080277");
-
-		System.out.println(catalogo.size());
+//		
+		// RIMUOVI ELEMENTO PER ISBN E SALVATAGGIO
+//		rimuoviElemento("ID3080277");
 		
-		ricercaPerAnno(2023);
+//		
+//		RICERCA PER ANNO
+//		ricercaPerAnno(2023);
+//		
 		
-		ricercaPerAutore("");
+// 		RICERCA PER AUTORE
+//		ricercaPerAutore("");
+//		
+		
+//		TEST
+//		aggiungiElemento(libro5);
+//		aggiungiElemento(libro6);
+//		rimuoviElemento("ID2416365");
 		
 		
 	
@@ -111,6 +123,7 @@ public class Archivio {
 		});
 		builder.add(elem);
 		catalogo = builder.build().collect(Collectors.toList());
+		System.out.println("Esercizio 1");
 		System.out.println("Nuovo elemento aggiunto: ");
 		catalogo.get(catalogo.size()-1).getElemento();
 		System.out.println();
@@ -126,6 +139,8 @@ public class Archivio {
 		.forEach(e -> builder.add(e));;
 		
 		catalogo = builder.build().collect(Collectors.toList());
+		System.out.println("Esercizio 2");
+		System.out.println("Elemento " + id + " rimosso");
 		salvaCatalogo();
 		
 		// PER VERIFICARE GLI ELEMENTI
@@ -228,6 +243,7 @@ public class Archivio {
 			
 			try {
 				FileUtils.writeStringToFile(file, builder.toString(), "UTF-8");
+			
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -267,6 +283,7 @@ public class Archivio {
 					
 //					Rivista rivista1 = new Rivista("ID2625473", "Storic Mag", LocalDate.of(2020, 07, 12), 140, Periodicità.MENSILE);
 				}
+				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

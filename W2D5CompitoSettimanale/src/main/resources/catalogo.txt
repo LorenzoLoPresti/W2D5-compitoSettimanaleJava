@@ -1,3 +1,4 @@
+Libro#ID3080277#L'arte della Guerra#2012#90#Sun Tsu#SAGGISTICA
 Libro#ID8660409#Harry Potter e il prigioniero di Azkaban#2013#330#JK Rowling#SAGGISTICA
 Libro#ID8660409#Lord of Light#2000#200#Roger Zelazny#FANTASY
 Libro#ID8660409#Wool#2009#709#Hugh Howley#STORICO
