@@ -257,7 +257,7 @@ public class Archivio {
 		File file = new File(nomeFile);
 		try {
 			List<String> numeroRighe = FileUtils.readLines(file, "UTF-8");
-			System.out.println("\n" + numeroRighe.size());
+
 			for(String e : numeroRighe) {
 				String[] spazio = e.split(spaceMaker());
 				if(spazio[0].equals("Libro")) {
